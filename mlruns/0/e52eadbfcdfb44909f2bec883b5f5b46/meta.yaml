@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Latihan-CI/Latihan-CI/mlruns/0/e52eadbfcdfb44909f2bec883b5f5b46/artifacts
+end_time: 1749912837624
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e52eadbfcdfb44909f2bec883b5f5b46
+run_name: melodic-cub-75
+run_uuid: e52eadbfcdfb44909f2bec883b5f5b46
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1749912693612
+status: 3
+tags: []
+user_id: runner
