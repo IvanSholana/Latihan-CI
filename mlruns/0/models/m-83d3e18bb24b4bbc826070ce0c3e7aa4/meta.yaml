@@ -1,0 +1,10 @@
+artifact_location: file:///home/runner/work/Latihan-CI/Latihan-CI/mlruns/0/models/m-83d3e18bb24b4bbc826070ce0c3e7aa4/artifacts
+creation_timestamp: 1749868689191
+experiment_id: '0'
+last_updated_timestamp: 1749868693971
+model_id: m-83d3e18bb24b4bbc826070ce0c3e7aa4
+model_type: null
+name: model
+source_run_id: f3f652b77bd64c30be045b76797a5eaf
+status: 2
+status_message: null
