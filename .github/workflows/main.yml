@@ -11,6 +11,9 @@ on:
 env:
   CSV_URL: "MLproject/train_pca.csv"
 
+permissions:
+  contents: write 
+
 jobs:
   build:
     runs-on: ubuntu-latest
