@@ -12,7 +12,7 @@ env:
   CSV_URL: "MLproject/train_pca.csv"
 
 permissions:
-  contents: write 
+  contents: write
 
 jobs:
   build:
@@ -22,12 +22,11 @@ jobs:
       # Checkout repo
       - uses: actions/checkout@v3
         with:
-          lfs: true   # ⬅️ Aktifkan LFS saat checkout
+          lfs: true
 
       # Install Git LFS
       - name: Install Git LFS
-        run: |
-          git lfs install
+        run: git lfs install
 
       # Setup Python
       - name: Set up Python 3.12.7
@@ -43,26 +42,40 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install mlflow
+          pip install mlflow==2.22.0
 
       # Run MLflow project
       - name: Run mlflow project
         run: |
           mlflow run MLproject --env-manager=local
 
-      # Track large file types (sekali saja cukup)
+      # Track model files with Git LFS
       - name: Track model.pkl with Git LFS
         run: |
           git lfs track "*.pkl"
           git add .gitattributes
 
-      # Commit and push results
+      # Commit and push model artifacts
       - name: Save mlruns to repo
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # atau pakai PAT jika perlu
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "${{ secrets.username }}"
           git config --global user.email "${{ secrets.email }}"
           git add mlruns/ .gitattributes
           git commit -m "Save mlruns from CI run with LFS" || echo "Nothing to commit"
           git push origin main
+
+      # 🐳 Build Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/credit-model:latest .
+
+      # 🔐 Login to Docker Hub
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      # 🚀 Push Docker image to Docker Hub
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/credit-model:latest
