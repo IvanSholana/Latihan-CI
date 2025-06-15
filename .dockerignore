@@ -1,0 +1,7 @@
+mlruns/
+.git/
+.gitignore
+.github/
+.dockerignore
+*.csv
+*.log
