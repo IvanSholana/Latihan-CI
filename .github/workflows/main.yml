@@ -40,6 +40,10 @@ jobs:
         run: |
           mlflow run MLproject --env-manager=local
 
+              - name: Cleanup mlruns
+      - run: |
+          rm -rf mlruns
+
       - name: Get latest MLflow run_id
         run: |
           RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | cut -d'/' -f3)

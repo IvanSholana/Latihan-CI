@@ -1,0 +1,40 @@
+# MLflow output
+mlruns/
+*.log
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.ipynb_checkpoints
+
+# VS Code
+.vscode/
+
+# Environment
+.env
+.venv/
+env/
+venv/
+
+# Jupyter Notebook metadata
+.ipynb_checkpoints/
+
+# Data
+*.csv
+*.tsv
+*.json
+*.xlsx
+*.h5
+
+# Docker
+.dockerignore
+
+# GitHub
+.gitattributes
+.github/
+
+# ML models
+model/
+runs/
