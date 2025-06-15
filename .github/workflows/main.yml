@@ -41,7 +41,7 @@ jobs:
         run: |
           OUTPUT=$(mlflow run MLproject --env-manager=local)
           echo "$OUTPUT"
-          RUN_ID=$(echo "$OUTPUT" | grep -oP "(?<=Run \(ID ')[^']+")
+          RUN_ID=$(echo "$OUTPUT" | sed -n "s/.*Run (ID '\([^']*\)').*/\1/p")
           echo "RUN_ID=$RUN_ID"
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
 
