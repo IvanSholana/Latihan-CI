@@ -39,9 +39,8 @@ jobs:
       - name: Run MLflow project and extract RUN_ID
         id: run
         run: |
-          OUTPUT=$(mlflow run MLproject --env-manager=local)
-          echo "$OUTPUT"
-          RUN_ID=$(echo "$OUTPUT" | sed -n "s/.*Run (ID '\([^']*\)').*/\1/p")
+          mlflow run MLproject --env-manager=local
+          RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | awk -F '/' '{print $(NF-1)}')
           echo "RUN_ID=$RUN_ID"
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
 
