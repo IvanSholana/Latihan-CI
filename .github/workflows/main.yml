@@ -36,19 +36,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install mlflow==2.22.0
 
-      - name: Run MLflow project
+      - name: Run MLflow project and extract RUN_ID
+        id: run
         run: |
-          mlflow run MLproject --env-manager=local
-
-      - name: Cleanup mlruns
-        run: |
-          rm -rf mlruns
-
-      - name: Get latest MLflow run_id
-        run: |
-          RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | cut -d'/' -f3)
+          OUTPUT=$(mlflow run MLproject --env-manager=local)
+          echo "$OUTPUT"
+          RUN_ID=$(echo "$OUTPUT" | grep -oP "(?<=Run \(ID ')[^']+")
+          echo "RUN_ID=$RUN_ID"
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-          echo "Latest run_id: $RUN_ID"
 
       - name: Build Docker Model
         run: |
@@ -62,3 +57,7 @@ jobs:
         run: |
           docker tag cc:latest ${{ secrets.DOCKERHUB_USERNAME }}/cc:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/cc:latest
+
+      - name: Cleanup mlruns
+        run: |
+          rm -rf mlruns
